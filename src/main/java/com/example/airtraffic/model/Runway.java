@@ -25,7 +25,6 @@ public class Runway {
     private boolean isRunWayAvailable;
     private int length;
     @OneToMany(mappedBy = "runway",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JsonBackReference
     private List<Flights> flights;
 
 }

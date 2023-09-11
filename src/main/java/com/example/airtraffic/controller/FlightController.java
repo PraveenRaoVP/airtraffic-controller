@@ -1,4 +1,5 @@
     package com.example.airtraffic.controller;
+    import com.example.airtraffic.dao.FlightsDAO;
     import com.example.airtraffic.model.Flights;
     import com.example.airtraffic.model.Runway;
     import com.example.airtraffic.model.Terminal;
@@ -34,7 +35,7 @@
             return flightService.getFlightsByTerminals(terminal);
         }
         @PostMapping("/create")
-        public Flights createNewFlight(@RequestBody Flights flights){
+        public Flights createNewFlight(@RequestBody FlightsDAO flights){
             return flightService.createNewFlight(flights);
         }
         @PutMapping("/updateFlight/{flight_id}")

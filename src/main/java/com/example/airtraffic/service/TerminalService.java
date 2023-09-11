@@ -24,13 +24,9 @@ public class TerminalService {
         return new ResponseEntity<>(terminals, HttpStatus.OK);
     }
 
-    public ResponseEntity<Terminal> getTerminalById(int terminal_id) {
-        Optional<Terminal> optionalTerminal = terminalRepository.findById(terminal_id);
-        if (optionalTerminal.isPresent()) {
-            return new ResponseEntity<>(optionalTerminal.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public Terminal getTerminalById(int terminal_id) {
+        Terminal terminal = terminalRepository.findById(terminal_id).orElse(new Terminal());
+        return terminal;
     }
 
     public ResponseEntity<Terminal> createTerminal(Terminal terminal) {

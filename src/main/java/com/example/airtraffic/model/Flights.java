@@ -24,11 +24,9 @@ public class Flights {
     private double ticketPrice;
     private int capacity;
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "runway_id")
     private Runway runway;
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "terminal_id")
     private Terminal terminal;
 

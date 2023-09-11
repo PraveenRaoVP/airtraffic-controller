@@ -25,6 +25,5 @@ public class Terminal {
     private int flightParkingCapacity;
     private String location;
     @OneToMany(mappedBy = "terminal",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JsonBackReference
     private List<Flights> flights;
 }

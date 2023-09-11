@@ -1,4 +1,5 @@
 package com.example.airtraffic.service;
+import com.example.airtraffic.dao.FlightsDAO;
 import com.example.airtraffic.model.Flights;
 import com.example.airtraffic.model.Runway;
 import com.example.airtraffic.model.Terminal;
@@ -14,7 +15,10 @@ import java.util.Optional;
 public class FlightService {
     @Autowired
     private FlightRepo flightRepo;
-    private RunwayRepo runwayRepo;
+    @Autowired
+    private RunwayService runwayService;
+    @Autowired
+    private TerminalService terminalService;
     public ResponseEntity<List<Flights>> getAllFlights(){
         List<Flights> flights = flightRepo.findAll();
         return new ResponseEntity<>(flights, HttpStatus.OK);
@@ -29,9 +33,40 @@ public class FlightService {
     public List<Flights> getFlightsByTerminals(Terminal terminal){
         return flightRepo.findByTerminal(terminal);
     }
-    public Flights createNewFlight(Flights flights){
+    public Flights createNewFlight(FlightsDAO flightsDAO) {
+        Flights flights = new Flights();
+        flights.setFlight_name(flightsDAO.getFlight_name());
+        flights.setDomestic(flightsDAO.isDomestic());
+        flights.setStatus(flightsDAO.isStatus());
+        flights.setCapacity(flightsDAO.getCapacity());
+        flights.setArrivedAirport(flightsDAO.getArrivedAirport());
+        flights.setDepartureAirport(flightsDAO.getDepartureAirport());
+        flights.setArrivalTime(flightsDAO.getArrivalTime());
+        flights.setDepartureTime(flightsDAO.getDepartureTime());
+        flights.setTicketPrice(flightsDAO.getTicketPrice());
+
+        // Get the Runway and Terminal objects
+        Runway runway = runwayService.getRunwayById(flightsDAO.getRunwayId());
+        Terminal terminal = terminalService.getTerminalById(flightsDAO.getTerminalId());
+
+        if (runway == null || terminal == null) {
+            // Handle the case where either the Runway or Terminal is not found
+            // You may return an error response or throw an exception
+            // Example: throw new ResourceNotFoundException("Runway or Terminal not found");
+            return null; // Modify this line based on your error handling strategy
+        }
+
+        flights.setRunway(runway);
+        flights.setTerminal(terminal);
+
+        // Save the Runway entity if it's new
+        if (runway.getRunway_id() == 0) {
+            runway = runwayService.createRunway(runway).getBody();
+        }
+
         return flightRepo.save(flights);
     }
+
     public Flights updateFlight(int flight_id,Flights updatedFlight){
         Optional<Flights> optionalFlights1 = flightRepo.findById(flight_id);
         if(optionalFlights1.isPresent()){

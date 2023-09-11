@@ -17,7 +17,8 @@ public class TerminalController {
     }
     @GetMapping("/{terminal_id}")
     public ResponseEntity<Terminal> getTerminalById(@PathVariable int terminal_id){
-        return terminalService.getTerminalById(terminal_id);
+        Terminal terminal = terminalService.getTerminalById(terminal_id);
+        return new ResponseEntity<>(terminal, org.springframework.http.HttpStatus.OK);
     }
     @PostMapping("/addTerminal")
     public ResponseEntity<Terminal> createTerminal(@RequestBody Terminal terminal){

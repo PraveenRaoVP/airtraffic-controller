@@ -2,6 +2,7 @@ package com.example.airtraffic.controller;
 import com.example.airtraffic.model.Runway;
 import com.example.airtraffic.service.RunwayService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -21,7 +22,8 @@ public class RunwayController {
     }
     @GetMapping("/{runway_id}")
     public ResponseEntity<Runway> getRunwayById(@PathVariable int runway_id){
-        return runwayService.getRunwayById(runway_id);
+        Runway runway = runwayService.getRunwayById(runway_id);
+        return new ResponseEntity<>(runway, HttpStatus.OK);
     }
     @PostMapping("/create")
     public ResponseEntity<Runway> createRunway(@RequestBody Runway runway){

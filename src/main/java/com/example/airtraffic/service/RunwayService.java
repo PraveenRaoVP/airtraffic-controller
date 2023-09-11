@@ -20,13 +20,9 @@ public class RunwayService {
         List<Runway> runways = runwayRepo.findAll();
         return new ResponseEntity<>(runways, HttpStatus.OK);
     }
-    public ResponseEntity<Runway> getRunwayById(int runway_id){
+    public Runway getRunwayById(int runway_id){
         Optional<Runway> optionalRunway = runwayRepo.findById(runway_id);
-        if (optionalRunway.isPresent()){
-            return new ResponseEntity<>(optionalRunway.get(),HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return optionalRunway.orElse(new Runway());
     }
     public ResponseEntity<Runway> createRunway(Runway runway){
         Runway createdRunway = runwayRepo.save(runway);
