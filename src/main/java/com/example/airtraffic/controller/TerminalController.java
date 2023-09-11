@@ -15,22 +15,20 @@ public class TerminalController {
     public ResponseEntity<List<Terminal>> getAllTerminals(){
         return terminalService.getAllTerminals();
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<Terminal> getTerminalById(@PathVariable Long id){
-        return terminalService.getTerminalById(id);
+    @GetMapping("/{terminal_id}")
+    public ResponseEntity<Terminal> getTerminalById(@PathVariable int terminal_id){
+        return terminalService.getTerminalById(terminal_id);
     }
     @PostMapping("/addTerminal")
     public ResponseEntity<Terminal> createTerminal(@RequestBody Terminal terminal){
         return terminalService.createTerminal(terminal);
     }
-    @PutMapping("/updateTerminal/{id}")
-    public ResponseEntity<Terminal> updateTerminal(@PathVariable Long id,@RequestBody Terminal terminal){
-        return  terminalService.updateTerminal(id, terminal);
+    @PutMapping("/updateTerminal/{terminal_id}")
+    public ResponseEntity<Terminal> updateTerminal(@PathVariable int terminal_id,@RequestBody Terminal terminal){
+        return  terminalService.updateTerminal(terminal_id, terminal);
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteTerminal(@PathVariable Long id){
-        return terminalService.deleteTerminal(id);
+    public ResponseEntity<Void> deleteTerminal(@PathVariable int terminal_id){
+        return terminalService.deleteTerminal(terminal_id);
     }
-
-
 }

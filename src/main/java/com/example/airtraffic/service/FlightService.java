@@ -1,29 +1,26 @@
 package com.example.airtraffic.service;
-
-
-
 import com.example.airtraffic.model.Flights;
 import com.example.airtraffic.model.Runway;
 import com.example.airtraffic.model.Terminal;
 import com.example.airtraffic.repository.FlightRepo;
+import com.example.airtraffic.repository.RunwayRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-
 import java.util.List;
 import java.util.Optional;
 @Service
 public class FlightService {
     @Autowired
     private FlightRepo flightRepo;
+    private RunwayRepo runwayRepo;
     public ResponseEntity<List<Flights>> getAllFlights(){
         List<Flights> flights = flightRepo.findAll();
         return new ResponseEntity<>(flights, HttpStatus.OK);
     }
-    public Flights getFlightById(Long id){
-        Optional<Flights> optionalFlights = flightRepo.findById(id);
+    public Flights getFlightById(int flight_id){
+        Optional<Flights> optionalFlights = flightRepo.findById(flight_id);
         return optionalFlights.orElse(new Flights());
     }
     public List<Flights> getFlightsByRunway(Runway runway){
@@ -35,8 +32,8 @@ public class FlightService {
     public Flights createNewFlight(Flights flights){
         return flightRepo.save(flights);
     }
-    public Flights updateFlight(Long id,Flights updatedFlight){
-        Optional<Flights> optionalFlights1 = flightRepo.findById(id);
+    public Flights updateFlight(int flight_id,Flights updatedFlight){
+        Optional<Flights> optionalFlights1 = flightRepo.findById(flight_id);
         if(optionalFlights1.isPresent()){
             Flights exisitingFlights = optionalFlights1.get();
             exisitingFlights.setFlight_name(updatedFlight.getFlight_name());
@@ -53,8 +50,8 @@ public class FlightService {
         }
         return null;
     }
-    public void deleteFlight(Long id){
-        flightRepo.deleteById(id);
+    public void deleteFlight(int flight_id){
+        flightRepo.deleteById(flight_id);
     }
 
 }

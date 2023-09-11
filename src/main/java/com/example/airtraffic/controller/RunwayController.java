@@ -19,21 +19,21 @@ public class RunwayController {
     public ResponseEntity<List<Runway>> getAllRunways(){
         return runwayService.getAllRunways();
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<Runway> getRunwayById(@PathVariable Long id){
-        return runwayService.getRunwayById(id);
+    @GetMapping("/{runway_id}")
+    public ResponseEntity<Runway> getRunwayById(@PathVariable int runway_id){
+        return runwayService.getRunwayById(runway_id);
     }
     @PostMapping("/create")
     public ResponseEntity<Runway> createRunway(@RequestBody Runway runway){
         return runwayService.createRunway(runway);
     }
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Runway> updateRunway(@PathVariable Long id,@RequestBody Runway updatedRunway){
-        return runwayService.updateRunway(id, updatedRunway);
+    @PutMapping("/update/{runway_id}")
+    public ResponseEntity<Runway> updateRunway(@PathVariable int runway_id,@RequestBody Runway updatedRunway){
+        return runwayService.updateRunway(runway_id, updatedRunway);
     }
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteRunway(@PathVariable Long id){
-        return runwayService.deleteRunway(id);
+    @DeleteMapping("/delete/{runway_id}")
+    public ResponseEntity<Void> deleteRunway(@PathVariable int runway_id){
+        return runwayService.deleteRunway(runway_id);
     }
 
 }

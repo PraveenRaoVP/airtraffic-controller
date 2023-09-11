@@ -20,8 +20,8 @@ public class RunwayService {
         List<Runway> runways = runwayRepo.findAll();
         return new ResponseEntity<>(runways, HttpStatus.OK);
     }
-    public ResponseEntity<Runway> getRunwayById(Long id){
-        Optional<Runway> optionalRunway = runwayRepo.findById(id);
+    public ResponseEntity<Runway> getRunwayById(int runway_id){
+        Optional<Runway> optionalRunway = runwayRepo.findById(runway_id);
         if (optionalRunway.isPresent()){
             return new ResponseEntity<>(optionalRunway.get(),HttpStatus.OK);
         }else {
@@ -32,13 +32,13 @@ public class RunwayService {
         Runway createdRunway = runwayRepo.save(runway);
         return new ResponseEntity<>(createdRunway,HttpStatus.CREATED);
     }
-    public ResponseEntity<Runway> updateRunway(Long id,Runway updatedRunway){
-        Optional<Runway> optionalRunway = runwayRepo.findById(id);
+    public ResponseEntity<Runway> updateRunway(int runway_id,Runway updatedRunway){
+        Optional<Runway> optionalRunway = runwayRepo.findById(runway_id);
         if (optionalRunway.isPresent()){
             Runway existingRunway = optionalRunway.get();
             existingRunway.setName(updatedRunway.getName());
             existingRunway.setRunWayAvailable(updatedRunway.isRunWayAvailable());
-            existingRunway.setId(updatedRunway.getId());
+            existingRunway.setRunway_id(updatedRunway.getRunway_id());
             existingRunway.setLength(updatedRunway.getLength());
             Runway updatedRunwayEntity = runwayRepo.save(existingRunway);
             return new ResponseEntity<>(updatedRunwayEntity,HttpStatus.OK);
@@ -47,10 +47,10 @@ public class RunwayService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    public ResponseEntity<Void> deleteRunway(Long id){
-        Optional<Runway> optionalRunway = runwayRepo.findById(id);
+    public ResponseEntity<Void> deleteRunway(int runway_id){
+        Optional<Runway> optionalRunway = runwayRepo.findById(runway_id);
         if (optionalRunway.isPresent()){
-            runwayRepo.deleteById(id);
+            runwayRepo.deleteById(runway_id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

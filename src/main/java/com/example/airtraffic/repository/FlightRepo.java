@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface FlightRepo extends JpaRepository<Flights,Long> {
+public interface FlightRepo extends JpaRepository<Flights,Integer> {
     List<Flights> findByRunway(Runway runway);
     List<Flights> findByTerminal(Terminal terminal);
 }

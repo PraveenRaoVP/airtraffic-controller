@@ -24,8 +24,8 @@ public class TerminalService {
         return new ResponseEntity<>(terminals, HttpStatus.OK);
     }
 
-    public ResponseEntity<Terminal> getTerminalById(Long id) {
-        Optional<Terminal> optionalTerminal = terminalRepository.findById(id);
+    public ResponseEntity<Terminal> getTerminalById(int terminal_id) {
+        Optional<Terminal> optionalTerminal = terminalRepository.findById(terminal_id);
         if (optionalTerminal.isPresent()) {
             return new ResponseEntity<>(optionalTerminal.get(), HttpStatus.OK);
         } else {
@@ -38,13 +38,13 @@ public class TerminalService {
         return new ResponseEntity<>(createdTerminal, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Terminal> updateTerminal(Long id, Terminal updatedTerminal) {
-        Optional<Terminal> optionalTerminal = terminalRepository.findById(id);
+    public ResponseEntity<Terminal> updateTerminal(int terminal_id, Terminal updatedTerminal) {
+        Optional<Terminal> optionalTerminal = terminalRepository.findById(terminal_id);
         if (optionalTerminal.isPresent()) {
             Terminal existingTerminal = optionalTerminal.get();
             existingTerminal.setName(updatedTerminal.getName());
             existingTerminal.setDomestic(updatedTerminal.isDomestic());
-            existingTerminal.setflightParkingCapacity(updatedTerminal.getflightParkingCapacity());
+            existingTerminal.setFlightParkingCapacity(updatedTerminal.getFlightParkingCapacity());
             existingTerminal.setLocation(updatedTerminal.getLocation());
             Terminal updatedTerminalEntity = terminalRepository.save(existingTerminal);
             return new ResponseEntity<>(updatedTerminalEntity, HttpStatus.OK);
@@ -53,10 +53,10 @@ public class TerminalService {
         }
     }
 
-    public ResponseEntity<Void> deleteTerminal(Long id) {
-        Optional<Terminal> optionalTerminal = terminalRepository.findById(id);
+    public ResponseEntity<Void> deleteTerminal(int terminal_id) {
+        Optional<Terminal> optionalTerminal = terminalRepository.findById(terminal_id);
         if (optionalTerminal.isPresent()) {
-            terminalRepository.deleteById(id);
+            terminalRepository.deleteById(terminal_id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
